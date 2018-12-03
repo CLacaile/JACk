@@ -27,9 +27,11 @@ public class JACkController {
                 model.getClock().now();
                 if(format==1) {
                     view.displayTime(model.getClock().toStringWithSeconds());
+                    System.out.println(model.getClock().toStringWithSeconds());
                 }
                 else if(format == 2) {
                     view.displayTime(model.getClock().toString());
+                    System.out.println(model.getClock().toString());
                 }
             }
         }, 0, 1000);
