@@ -6,10 +6,16 @@ public class Clock implements Comparable<Clock> {
 	// Attributes
 	private byte hour;
 	private byte minute;
+	private byte second;
 	
 	// Constructors
 	public Clock(int hour, int minute) {
 		setHourMinute(hour, minute);
+	}
+	public Clock(byte hour, byte minute, byte second) {
+		this.hour = hour;
+		this.minute = minute;
+		this.second = second;
 	}
 	public Clock(byte hour, byte minute) {
 		this.hour = hour;
@@ -27,6 +33,8 @@ public class Clock implements Comparable<Clock> {
 		public int getMinute() {
 			return minute;
 		}
+		public int getSecond() { return second;}
+
 		public void setHour(int hh) {
 			if(hh < 0 || hh > 23) {
 				throw new IllegalArgumentException("Heure invalide : "+hh);
@@ -36,16 +44,30 @@ public class Clock implements Comparable<Clock> {
 		}
 		public void setMinute(int mm) {
 			if(mm < 0 || mm > 59) {
-				throw new IllegalArgumentException("minute invalides : "+mm);
+				throw new IllegalArgumentException("Minute invalides : "+mm);
 			}
 			minute =  (byte) mm;
+		}
+
+		public void setSecond(int ss) {
+			if(ss < 0 || ss > 59) {
+				throw new IllegalArgumentException("Secondes invalides : "+ss);
+			}
+			second =  (byte) ss;
 		}
 		public void setHourMinute(int hh, int mm) {
 			setHour(hh);
 			setMinute(mm);
 		}
+
+		public void setHourMinuteSecond(int hh, int mm, int ss) {
+		setHour(hh);
+		setMinute(mm);
+		setSecond(ss);
+		}
+
 		public void now() {
-			setHourMinute(LocalTime.now().getHour(), LocalTime.now().getMinute());
+			setHourMinuteSecond(LocalTime.now().getHour(), LocalTime.now().getMinute(), LocalTime.now().getSecond());
 		}
 	
 	// Methods
@@ -66,6 +88,23 @@ public class Clock implements Comparable<Clock> {
 			strMinute = "0".concat(strMinute);
 		}
 		return strHour+":"+strMinute;
+	}
+
+	public String toStringWithSeconds() {
+		String strHour = Byte.toString(hour);
+		String strMinute = Byte.toString(minute);
+		String strSecond = Byte.toString(second);
+		// Add 0
+		if(strHour.length() == 1){
+			strHour = "0".concat(strHour);
+		}
+		if(strMinute.length() == 1){
+			strMinute = "0".concat(strMinute);
+		}
+		if(strSecond.length() == 1){
+			strSecond = "0".concat(strSecond);
+		}
+		return strHour+":"+strMinute+":"+strSecond;
 	}
 	
 	/**
