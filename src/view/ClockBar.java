@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
 
 import javax.swing.*;
 
@@ -22,8 +23,33 @@ public class ClockBar extends JMenuBar
 	private JCheckBoxMenuItem secondes = new JCheckBoxMenuItem("Secondes");
 
 	public ClockBar() {
+		class EnglishFormatListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==formatAMPM) {
+					JACkController.setFormat(3);
+    				secondes.setVisible(false);
+				}
+			}
+		}
+		formatAMPM.addActionListener(new EnglishFormatListener());
 		formatMenu.add(formatAMPM);
+		
+		class ClassicFormatListener implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource()==format24h) {
+					if(secondes.isSelected())
+						JACkController.setFormat(1);
+					else
+						JACkController.setFormat(2);
+    				secondes.setVisible(true);
+				}
+			}
+		}
+		format24h.addActionListener(new ClassicFormatListener());
 		formatMenu.add(format24h);
+		
 		viewMenu.add(formatMenu);
 		viewMenu.addSeparator();
 
@@ -34,6 +60,7 @@ public class ClockBar extends JMenuBar
 		viewMenu.addSeparator();
 		
 		secondes.setSelected(true);
+		
 		class ShowSecondListener implements ActionListener {
 	    	@Override
 	    	public void actionPerformed(ActionEvent e) {
@@ -42,8 +69,9 @@ public class ClockBar extends JMenuBar
 	    		if(selected) {
 	    			JACkController.setFormat(1);
 	    		}
-	    		else
+	    		else {
 	    			JACkController.setFormat(2);
+	    		}
 	    	}
 		}
 	    secondes.addActionListener(new ShowSecondListener());
