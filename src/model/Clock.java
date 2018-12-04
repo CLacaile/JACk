@@ -53,7 +53,7 @@ public class Clock implements Comparable<Clock> {
 			if(ss < 0 || ss > 59) {
 				throw new IllegalArgumentException("Secondes invalides : "+ss);
 			}
-			second =  (byte) ss;
+			second = (byte) ss;
 		}
 		public void setHourMinute(int hh, int mm) {
 			setHour(hh);
@@ -105,6 +105,25 @@ public class Clock implements Comparable<Clock> {
 			strSecond = "0".concat(strSecond);
 		}
 		return strHour+":"+strMinute+":"+strSecond;
+	}
+	
+	public String toStringEnglish() {
+		String strHour = Byte.toString((byte) modulo(hour,12));
+		String strMinute = Byte.toString(minute);
+		String strSecond = Byte.toString(second);
+		// Add 0
+		if(strHour.length() == 1){
+			strHour = "0".concat(strHour);
+		}
+		if(strMinute.length() == 1){
+			strMinute = "0".concat(strMinute);
+		}
+		if(strSecond.length() == 1){
+			strSecond = "0".concat(strSecond);
+		}
+		if(hour>12)
+			return strHour+"AM:"+strMinute;
+		return strHour+"AM:"+strMinute;
 	}
 	
 	/**
@@ -171,5 +190,4 @@ public class Clock implements Comparable<Clock> {
 			return new Clock(this.getHour(), 0);
 		}
 	}
-
 }
