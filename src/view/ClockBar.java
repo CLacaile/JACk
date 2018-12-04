@@ -1,6 +1,11 @@
 package view;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
+
+import controller.JACkController;
 
 @SuppressWarnings("serial")
 public class ClockBar extends JMenuBar
@@ -20,16 +25,28 @@ public class ClockBar extends JMenuBar
 		formatMenu.add(formatAMPM);
 		formatMenu.add(format24h);
 		viewMenu.add(formatMenu);
-
-		viewMenu.add(formatMenu);
 		viewMenu.addSeparator();
 
 		clockType.add(clock1);
 		clockType.add(clock2);
 		clockType.add(clock3);
 		viewMenu.add(clockType);
-		
 		viewMenu.addSeparator();
+		
+		secondes.setSelected(true);
+		class ShowSecondListener implements ActionListener {
+	    	@Override
+	    	public void actionPerformed(ActionEvent e) {
+	    		AbstractButton second = (AbstractButton) e.getSource();
+	    		boolean selected = second.getModel().isSelected();
+	    		if(selected) {
+	    			JACkController.setFormat(1);
+	    		}
+	    		else
+	    			JACkController.setFormat(2);
+	    	}
+		}
+	    secondes.addActionListener(new ShowSecondListener());
 		viewMenu.add(secondes);
 		
 		this.add(viewMenu);
