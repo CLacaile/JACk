@@ -122,8 +122,8 @@ public class Clock implements Comparable<Clock> {
 			strSecond = "0".concat(strSecond);
 		}
 		if(hour>12)
-			return strHour+"AM:"+strMinute;
-		return strHour+"AM:"+strMinute;
+			return strHour+"pm:"+strMinute;
+		return strHour+"am:"+strMinute;
 	}
 	
 	/**
